@@ -6,16 +6,16 @@ module.exports = function(homebridge) {
   Service = homebridge.hap.Service;
   Characteristic = homebridge.hap.Characteristic;
 
-  homebridge.registerAccessory("homebridge-sonoff-tasmota-http", "SonoffTasmotaHTTP", FoscamNightLightAccessory);
+  homebridge.registerAccessory("homebridge-sonoff-tasmota-http", "SonoffTasmotaHTTP", SonoffTasmotaHTTPAccessory);
 }
 
-function FoscamNightLightAccessory(log, config) {
+function SonoffTasmotaHTTPAccessory(log, config) {
   this.log = log;
   this.config = config;
   this.name = config["name"]
   this.hostname = config["hostname"] || "sonoff";
 
-  this.service = new Service.Switch(this.name);
+  this.service = new Service.Outlet(this.name);
 
   this.service
     .getCharacteristic(Characteristic.On)
@@ -25,7 +25,7 @@ function FoscamNightLightAccessory(log, config) {
   this.log("Sonoff Tasmota HTTP Initialized")
 }
 
-FoscamNightLightAccessory.prototype.getState = function(callback) {
+SonoffTasmotaHTTPAccessory.prototype.getState = function(callback) {
   var that = this
   request("http://" + this.hostname + "/cm?cmnd=Power", function(error, response, body) {
     if (error) return callback(error);
@@ -36,7 +36,7 @@ FoscamNightLightAccessory.prototype.getState = function(callback) {
   })
 }
 
-FoscamNightLightAccessory.prototype.setState = function(toggle, callback) {
+SonoffTasmotaHTTPAccessory.prototype.setState = function(toggle, callback) {
   var newstate = "%20Off"
   if (toggle) newstate = "%20On"
   var that = this
@@ -49,6 +49,6 @@ FoscamNightLightAccessory.prototype.setState = function(toggle, callback) {
   })
 }
 
-FoscamNightLightAccessory.prototype.getServices = function() {
+SonoffTasmotaHTTPAccessory.prototype.getServices = function() {
   return [this.service];
 }

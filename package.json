@@ -1,6 +1,6 @@
 {
   "name": "homebridge-sonoff-tasmota-http",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Control Sonoff Basic devices with Tasmota firmware through Homebridge",
   "main": "index.js",
   "scripts": {
