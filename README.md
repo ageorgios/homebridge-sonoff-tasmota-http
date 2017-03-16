@@ -14,6 +14,7 @@ http://sonoff/cm?cmnd=Power%20Off
 ```json
 {
   "accessory": "SonoffTasmotaHTTP",
+  "name": "Sonoff",
   "hostname": "The hostname of the Sonoff device"
 }
 ```

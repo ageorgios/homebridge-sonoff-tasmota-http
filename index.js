@@ -12,6 +12,7 @@ module.exports = function(homebridge) {
 function FoscamNightLightAccessory(log, config) {
   this.log = log;
   this.config = config;
+  this.name = config["name"]
   this.hostname = config["hostname"] || "sonoff";
 
   this.service = new Service.Switch(this.name);
