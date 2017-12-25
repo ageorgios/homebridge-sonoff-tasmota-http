@@ -13,6 +13,7 @@ function SonoffTasmotaHTTPAccessory(log, config) {
   this.log = log;
   this.config = config;
   this.name = config["name"]
+  this.relay = config["relay"] || ""
   this.hostname = config["hostname"] || "sonoff";
 
   this.service = new Service.Outlet(this.name);
@@ -27,12 +28,12 @@ function SonoffTasmotaHTTPAccessory(log, config) {
 
 SonoffTasmotaHTTPAccessory.prototype.getState = function(callback) {
   var that = this
-  request("http://" + that.hostname + "/cm?cmnd=Power", function(error, response, body) {
+  request("http://" + that.hostname + "/cm?cmnd=Power" + that.relay, function(error, response, body) {
     if (error) return callback(error);
   	var lines = body.split("\n");
-  	that.log("Sonoff HTTP: " + that.hostname + " Get State: " + lines[1]);
-  	if (lines[1] == "POWER = OFF") callback(null, 0)
-  	else if (lines[1] == "POWER = ON") callback(null, 1)
+  	that.log("Sonoff HTTP: " + that.hostname + ", Relay " + that.relay + ", Get State: " + lines[1]);
+  	if (lines[1] == "POWER" + that.relay + " = OFF") callback(null, 0)
+  	else if (lines[1] == "POWER" + that.relay + " = ON") callback(null, 1)
   })
 }
 
@@ -40,12 +41,12 @@ SonoffTasmotaHTTPAccessory.prototype.setState = function(toggle, callback) {
   var newstate = "%20Off"
   if (toggle) newstate = "%20On"
   var that = this
-  request("http://" + that.hostname + "/cm?cmnd=Power" + newstate, function(error, response, body) {
+  request("http://" + that.hostname + "/cm?cmnd=Power" + that.relay + newstate, function(error, response, body) {
     if (error) return callback(error);
   	var lines = body.split("\n");
-  	that.log("Sonoff HTTP: " + that.hostname + " Set State to: " + lines[1]);
-  	if (lines[1] == "POWER = OFF") callback()
-  	else if (lines[1] == "POWER = ON") callback()
+  	that.log("Sonoff HTTP: " + that.hostname + ", Relay " + that.relay + ", Set State to: " + lines[1]);
+  	if (lines[1] == "POWER" + that.relay + " = OFF") callback()
+  	else if (lines[1] == "POWER" + that.relay + " = ON") callback()
   })
 }
 
