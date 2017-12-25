@@ -1,7 +1,7 @@
 {
   "name": "homebridge-sonoff-tasmota-http",
-  "version": "1.0.3",
-  "description": "Control Sonoff Basic devices with Tasmota firmware through Homebridge",
+  "version": "1.1.0",
+  "description": "Control Sonoff Basic devices with Tasmota >5.10.0b firmware through Homebridge",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
