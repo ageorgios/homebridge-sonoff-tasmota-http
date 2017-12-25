@@ -18,3 +18,14 @@ http://sonoff/cm?cmnd=Power%20Off
   "hostname": "The hostname of the Sonoff device"
 }
 ```
+
+## Multiple Relays
+
+```json
+{
+  "accessory": "SonoffTasmotaHTTP",
+  "name": "Sonoff",
+  "relay": "2",
+  "hostname": "The hostname of the Sonoff device"
+}
+```

@@ -1,10 +1,6 @@
 var Service, Characteristic;
 var request = require('request');
 
-function isSonoffOn(http_reply) {
-  
-}
-
 module.exports = function(homebridge) {
   Service = homebridge.hap.Service;
   Characteristic = homebridge.hap.Characteristic;
@@ -16,6 +12,7 @@ function SonoffTasmotaHTTPAccessory(log, config) {
   this.log = log;
   this.config = config;
   this.name = config["name"]
+  this.relay = config["relay"] || ""
   this.hostname = config["hostname"] || "sonoff";
   
   this.service = new Service.Outlet(this.name);
@@ -30,11 +27,11 @@ function SonoffTasmotaHTTPAccessory(log, config) {
 
 SonoffTasmotaHTTPAccessory.prototype.getState = function(callback) {
   var that = this
-  request("http://" + that.hostname + "/cm?cmnd=Power", function(error, response, body) {
+  request("http://" + that.hostname + "/cm?cmnd=Power" + that.relay, function(error, response, body) {
     if (error) return callback(error);
     var sonoff_reply = JSON.parse(body); // {"POWER":"ON"}
     that.log("Sonoff HTTP: " + that.hostname + " Get State: " + JSON.stringify(sonoff_reply));
-    switch (sonoff_reply["POWER"]) {
+    switch (sonoff_reply["POWER" + that.relay]) {
       case "ON":
         callback(null, 1);
         break;
@@ -49,11 +46,11 @@ SonoffTasmotaHTTPAccessory.prototype.setState = function(toggle, callback) {
   var newstate = "%20Off"
   if (toggle) newstate = "%20On"
   var that = this
-  request("http://" + that.hostname + "/cm?cmnd=Power" + newstate, function(error, response, body) {
+  request("http://" + that.hostname + "/cm?cmnd=Power" + that.relay + newstate, function(error, response, body) {
     if (error) return callback(error);
     var sonoff_reply = JSON.parse(body); // {"POWER":"ON"}
     that.log("Sonoff HTTP: " + that.hostname + " State: " + JSON.stringify(sonoff_reply));
-    switch (sonoff_reply["POWER"]) {
+    switch (sonoff_reply["POWER" + that.relay]) {
       case "ON":
         callback();
         break;
