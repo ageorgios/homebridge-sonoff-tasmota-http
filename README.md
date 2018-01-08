@@ -33,3 +33,14 @@ http://sonoff/cm?cmnd=Power%20Off
   "hostname": "The hostname of the Sonoff device"
 }
 ```
+
+## Password specified in Web Interface
+
+```json
+{
+  "accessory": "SonoffTasmotaHTTP",
+  "name": "Sonoff",
+  "password": "The password from the web interface",
+  "hostname": "The hostname of the Sonoff device"
+}
+```
