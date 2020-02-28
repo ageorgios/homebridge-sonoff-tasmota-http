@@ -11,9 +11,10 @@ module.exports = function(homebridge) {
 function SonoffTasmotaHTTPAccessory(log, config) {
   this.log = log;
   this.config = config;
-  this.name = config["name"]
-  this.relay = config["relay"] || ""
-  this.hostname = config["hostname"] || "sonoff"
+  this.name = config["name"];
+  this.relay = config["relay"] || "";
+  this.timeout = config["timeout"] || 1000;
+  this.hostname = config["hostname"] || "sonoff";
   this.password = config["password"] || "";
   
   this.service = new Service.Outlet(this.name);
@@ -28,7 +29,7 @@ function SonoffTasmotaHTTPAccessory(log, config) {
 
 SonoffTasmotaHTTPAccessory.prototype.getState = function(callback) {
   var that = this
-  request("http://" + that.hostname + "/cm?user=admin&password=" + that.password + "&cmnd=Power" + that.relay, function(error, response, body) {
+  request("http://" + that.hostname + "/cm?user=admin&password=" + that.password + "&cmnd=Power" + that.relay, timeout: that.timeout, function(error, response, body) {
     if (error) return callback(error);
     var sonoff_reply = JSON.parse(body); // {"POWER":"ON"}
     that.log("Sonoff HTTP: " + that.hostname + ", Relay " + that.relay + ", Get State: " + JSON.stringify(sonoff_reply));
@@ -47,7 +48,7 @@ SonoffTasmotaHTTPAccessory.prototype.setState = function(toggle, callback) {
   var newstate = "%20Off"
   if (toggle) newstate = "%20On"
   var that = this
-  request("http://" + that.hostname + "/cm?user=admin&password=" + that.password + "&cmnd=Power" + that.relay + newstate, function(error, response, body) {
+  request("http://" + that.hostname + "/cm?user=admin&password=" + that.password + "&cmnd=Power" + that.relay + newstate, timeout: that.timeout, function(error, response, body) {
     if (error) return callback(error);
     var sonoff_reply = JSON.parse(body); // {"POWER":"ON"}
     that.log("Sonoff HTTP: " + that.hostname + ", Relay " + that.relay + ", Set State: " + JSON.stringify(sonoff_reply));
