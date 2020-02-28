@@ -23,6 +23,18 @@ http://sonoff/cm?cmnd=Power%20Off
 }
 ```
 
+## Timeout specified, defaults to 200ms
+
+```json
+{
+  "accessory": "SonoffTasmotaHTTP",
+  "name": "Sonoff",
+  "hostname": "The hostname of the Sonoff device",
+  "timeout": 2500
+}
+```
+
+
 ## Multiple Relays
 
 ```json
