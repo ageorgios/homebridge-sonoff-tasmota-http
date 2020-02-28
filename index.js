@@ -16,6 +16,7 @@ function SonoffTasmotaHTTPAccessory(log, config) {
   this.relay    = config['relay'] || '';
   this.hostname = config['hostname'] || 'sonoff';
   this.password = config['password'] || '';
+  this.timeout  = config['timeout'] || '200';
 
   this.service = new Service.Outlet(this.name);
 
@@ -31,7 +32,7 @@ SonoffTasmotaHTTPAccessory.prototype.getState = function (callback) {
   var that = this;
   request({
     uri:     'http://' + that.hostname + '/cm?user=admin&password=' + that.password + '&cmnd=Power' + that.relay,
-    timeout: 200,
+    timeout: that.timeout,
   }, function (error, response, body) {
     if (error) {
       return callback(error);
@@ -57,7 +58,7 @@ SonoffTasmotaHTTPAccessory.prototype.setState = function (toggle, callback) {
   var that = this;
   request({
     uri:     'http://' + that.hostname + '/cm?user=admin&password=' + that.password + '&cmnd=Power' + that.relay + newstate,
-    timeout: 200,
+    timeout: that.timeout,
   }, function (error, response, body) {
     if (error) {
       return callback(error);
