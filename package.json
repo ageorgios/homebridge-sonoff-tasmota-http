@@ -1,6 +1,6 @@
 {
-  "name": "homebridge-sonoff-tasmota-http",
-  "version": "1.2.0",
+  "name": "homebridge-sonoff-tasmota-timeout-http",
+  "version": "1.0",
   "description": "Control Sonoff Basic devices with Tasmota >5.10.0b firmware through Homebridge",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,7 @@
   "keywords": [
     "homebridge-plugin"
   ],
-  "author": "Georgios Andritsos <ageorgios@gmail.com>",
+  "author": "NiiWiiCamo",
   "license": "MIT",
   "engines": {
     "node": ">=0.12.0",
@@ -21,10 +21,10 @@
   "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ageorgios/homebridge-sonoff-tasmota-http.git"
+    "url": "git+https://github.com/niiwiicamo/homebridge-sonoff-tasmota-http.git"
   },
   "bugs": {
-    "url": "https://github.com/ageorgios/homebridge-sonoff-tasmota-http.git/issues"
+    "url": "https://github.com/niiwiicamo/homebridge-sonoff-tasmota-http.git/issues"
   },
-  "homepage": "https://github.com/ageorgios/homebridge-sonoff-tasmota-http.git#readme"
+  "homepage": "https://github.com/niiwiicamo/homebridge-sonoff-tasmota-http.git#readme"
 }
